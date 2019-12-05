@@ -1,4 +1,5 @@
 import React from 'react';
+
 function Option(props){
   return (
     <li>
@@ -8,7 +9,10 @@ function Option(props){
         onChange={(e) => {props.update(e, props.id)}}
         required
       />
-      <button type="button" onClick={() => {props.remove(props.id)}}>Remove</button>
+      <button
+        type="button"
+        className="remove"
+        onClick={() => {props.remove(props.id)}}>X</button>
     </li>
   )
 }

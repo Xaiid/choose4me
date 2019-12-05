@@ -1,13 +1,122 @@
+html, body, #root{
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: black;
+  color: #ff5b5b;
+  font-weight: bold;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  monospace;
+}
+
+#root section{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex-direction: column;
+}
+
+h1{
+  text-align: center;
+}
+
+form{
+  width: 500px;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+input{
+  padding: 10px;
+  border: none;
+  background: black;
+  border-bottom: 3px solid #ff5b5b;
+  flex: 1;
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: white;
+  font-weight: bold;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  box-shadow: none;
+}
+
+input:focus, input:active{
+  outline: none;
+  box-shadow: none;
+  border-bottom: 3px solid #ef611e;
+}
+
+ol{
+  list-style-type: none;
+  padding: 0;
+}
+
+ol li{
+  width: 100%;
+  flex: 1;
+  display: flex;
+}
+
+button{
+  padding: 10px;
+  border-radius: 3px;
+  text-align: center;
+  font-size: 15px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  margin-top: 10px;
+  border: none;
+  background: #ef611e;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover{
+  filter: brightness(1.5);
+}
+
+button.remove{
+  margin: 0;
+  width: 20px;
+  height: 21px;
+  font-size: 10px;
+  line-height: 10px;
+  padding: 5px;
+  display: inline-block;
+  background: #ef281e;
+  border-radius: 10px;
+  border: none;
+  color: white;
+}
+h2{
+  padding: 40px;
+}
+h2 span{
+  font-size: 46px;
+  background: #e2dfdf;
+  padding: 0 10px;
+  border-radius: 3px;
+  letter-spacing: 1.5px;
+  display: block;
+  margin-top: 20px;
+}
+.hidden{
+  display: none;
+}
+.clear{
+  background: #ef281e;
 }

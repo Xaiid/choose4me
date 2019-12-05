@@ -8,8 +8,12 @@ class Form extends React.Component{
       options: [{id: 0}, {id: 1}, {id: 2}],
       winner: ''
     }
-    this.updateOption = this.updateOption.bind(this);
+    const options = [{id: 0, text: 'wut'}, {id: 1}, {id: 2}].slice()
+    this.initialState = { ...this.state, options: options }
+    this.update = this.update.bind(this);
     this.remove = this.remove.bind(this);
+    this.back = this.back.bind(this);
+    this.reset = this.reset.bind(this);
   }
 
   remove(id){
@@ -22,15 +26,12 @@ class Form extends React.Component{
   }
 
   add(){
-    let options = this.state.options.slice()
-    options.push({id: options.length});
-
     this.setState({
-      options: options
+      options: [...this.state.options, {id: this.state.options.length}]
     })
   }
 
-  updateOption(option, id){
+  update(option, id){
     let options = this.state.options.slice()
     let index = this.state.options.indexOf(this.state.options.find(obj => id === obj.id))
     options[index]['text'] = option.target.value
@@ -49,36 +50,68 @@ class Form extends React.Component{
 
   renderOption(i) {
     return (
-    <Option
-      key={this.state.options[i].id}
-      remove={ this.remove }
-      id={this.state.options[i].id}
-      update={ this.updateOption }
-    />
+      <Option
+        key={this.state.options[i].id}
+        remove={ this.remove }
+        id={this.state.options[i].id}
+        update={ this.update}
+      />
     )
+  }
+
+  back(){
+    this.setState({ winner: ''})
+  }
+
+  reset(){
+    const options = this.state.options.slice()
+    options[0]['text'] = 'wuwuw'
+    this.setState({
+      options: options,
+      winner: null
+    })
+    this.refs.form.reset();
   }
 
   render(){
     return (
-      <form onSubmit={(e) => {this.choose(e)}}>
-        <ol>
-          {
-            this.state.options.map((i,index) => {
-              return this.renderOption(index)
-            })
-          }
-        </ol>
-        <button type="submit">
-          Choose!!
-        </button>
+      <div>
+        <form
+          ref="form"
+          onSubmit={(e) => {this.choose(e)}}
+          className={this.state.winner ? 'hidden' : ''}>
+          <h1>Choose 4 Me</h1>
+          <ol>
+            {
+              this.state.options.map((i,index) => {
+                return this.renderOption(index)
+              })
+            }
+          </ol>
 
-        <button type="button" onClick={() => { this.add()}}>
-          Add Option
-        </button>
+          <button type="submit">
+            Choose!!
+          </button>
 
-        <h1>{this.state.winner}</h1>
+          <button
+            type="button"
+            onClick={() => { this.add()}}>
+            Add More
+          </button>
 
-      </form>
+          <button
+            type="button"
+            className="clear"
+            onClick={this.reset}>Clear</button>
+
+        </form>
+        {this.state.winner &&
+            <section>
+              <h2>We've chosen: <span>{this.state.winner}</span></h2>
+              <button type="button" onClick={this.back}>Back</button>
+            </section>
+        }
+      </div>
     )
   }
 }

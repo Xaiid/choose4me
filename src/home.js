@@ -6,7 +6,6 @@ class Home extends React.Component{
    render(){
     return (
       <section>
-        <h1>Choose 4 Me</h1>
         <Form />
       </section>
     )
