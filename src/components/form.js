@@ -5,15 +5,16 @@ class Form extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      options: [{id: 0}, {id: 1}, {id: 2}],
+      options: [{id: 0}],
       winner: ''
     }
-    const options = [{id: 0, text: 'wut'}, {id: 1}, {id: 2}].slice()
+    const options = [{id: 0, text: 'wut'}].slice()
     this.initialState = { ...this.state, options: options }
     this.update = this.update.bind(this);
     this.remove = this.remove.bind(this);
     this.back = this.back.bind(this);
     this.reset = this.reset.bind(this);
+    this.add = this.add.bind(this);
   }
 
   remove(id){
@@ -52,9 +53,10 @@ class Form extends React.Component{
     return (
       <Option
         key={this.state.options[i].id}
-        remove={ this.remove }
+        remove={this.remove}
         id={this.state.options[i].id}
-        update={ this.update}
+        update={this.update}
+        add={this.add}
       />
     )
   }
@@ -75,7 +77,7 @@ class Form extends React.Component{
 
   render(){
     return (
-      <div>
+      <div className="form-container">
         <form
           ref="form"
           onSubmit={(e) => {this.choose(e)}}

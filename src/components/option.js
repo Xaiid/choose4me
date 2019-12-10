@@ -7,6 +7,11 @@ function Option(props){
         type="text"
         placeholder="Enter an option"
         onChange={(e) => {props.update(e, props.id)}}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            props.add()
+          }
+        }}
         required
       />
       <button

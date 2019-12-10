@@ -31,13 +31,24 @@ h1{
   text-align: center;
 }
 
-form{
-  width: 500px;
+.form-container{
   justify-content: center;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 60px);
+  margin-left: -20px;
+}
+
+form{
   display: flex;
   flex-direction: column;
 }
 
+@media (min-width:801px)  {
+  .form-container{
+    max-width: 500px;
+  }
+}
 input{
   padding: 10px;
   border: none;
@@ -68,6 +79,7 @@ ol li{
   width: 100%;
   flex: 1;
   display: flex;
+  position: relative;
 }
 
 button{
@@ -101,6 +113,9 @@ button.remove{
   border-radius: 10px;
   border: none;
   color: white;
+  position: absolute;
+  top: 10px;
+  right: 5px;
 }
 h2{
   padding: 40px;
@@ -113,6 +128,7 @@ h2 span{
   letter-spacing: 1.5px;
   display: block;
   margin-top: 20px;
+  text-align: center;
 }
 .hidden{
   display: none;
