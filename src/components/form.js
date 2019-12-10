@@ -1,91 +1,81 @@
-import React from 'react';
-import Option from './option.js';
+import React from 'react'
+import Option from './option.js'
 
-class Form extends React.Component{
-  constructor(props){
-    super(props);
+class Form extends React.Component {
+  constructor(props) {
+    super(props)
+    this.emptyOptions = [{ id: 0, text: '' }]
     this.state = {
-      options: [{id: 0}],
-      winner: ''
+      options: this.emptyOptions,
+      winner: null,
     }
-    const options = [{id: 0, text: 'wut'}].slice()
-    this.initialState = { ...this.state, options: options }
-    this.update = this.update.bind(this);
-    this.remove = this.remove.bind(this);
-    this.back = this.back.bind(this);
-    this.reset = this.reset.bind(this);
-    this.add = this.add.bind(this);
   }
 
-  remove(id){
+  remove = id => {
     let position = this.state.options.indexOf(this.state.options.find(obj => id === obj.id))
     let options = this.state.options.slice()
     options.splice(position, 1)
     this.setState({
-      options: options
+      options: options,
     })
   }
 
-  add(){
+  add = () => {
     this.setState({
-      options: [...this.state.options, {id: this.state.options.length}]
+      options: [...this.state.options, { id: this.state.options.length }],
     })
   }
 
-  update(option, id){
+  update = (option, id) => {
     let options = this.state.options.slice()
     let index = this.state.options.indexOf(this.state.options.find(obj => id === obj.id))
     options[index]['text'] = option.target.value
 
     this.setState({
-      options: options
+      options: options,
     })
   }
 
-  choose(e){
-    e.preventDefault();
+  back = () => {
+    this.setState({ winner: '' })
+  }
+
+  reset = () => {
     this.setState({
-      winner: this.state.options[Math.floor(Math.random() * this.state.options.length)].text
-    });
+      options: this.emptyOptions,
+      winner: null,
+    })
+  }
+
+  choose = e => {
+    e.preventDefault()
+    this.setState({
+      winner: this.state.options[Math.floor(Math.random() * this.state.options.length)].text,
+    })
   }
 
   renderOption(i) {
     return (
       <Option
-        key={this.state.options[i].id}
-        remove={this.remove}
-        id={this.state.options[i].id}
-        update={this.update}
         add={this.add}
+        remove={this.remove}
+        update={this.update}
+        option={this.state.options[i]}
       />
     )
   }
 
-  back(){
-    this.setState({ winner: ''})
-  }
-
-  reset(){
-    const options = this.state.options.slice()
-    options[0]['text'] = 'wuwuw'
-    this.setState({
-      options: options,
-      winner: null
-    })
-    this.refs.form.reset();
-  }
-
-  render(){
+  render() {
     return (
       <div className="form-container">
         <form
           ref="form"
-          onSubmit={(e) => {this.choose(e)}}
+          onSubmit={this.choose}
           className={this.state.winner ? 'hidden' : ''}>
           <h1>Choose 4 Me</h1>
           <ol>
             {
-              this.state.options.map((i,index) => {
+              this.state.options.map((i, index) => {
                 return this.renderOption(index)
               })
             }
@@ -97,25 +87,27 @@ class Form extends React.Component{
 
           <button
             type="button"
-            onClick={() => { this.add()}}>
+            onClick={this.add}>
             Add More
           </button>
 
           <button
             type="button"
             className="clear"
-            onClick={this.reset}>Clear</button>
+            onClick={this.reset}>
+            Clear
+          </button>
 
         </form>
         {this.state.winner &&
-            <section>
-              <h2>We've chosen: <span>{this.state.winner}</span></h2>
-              <button type="button" onClick={this.back}>Back</button>
-            </section>
+        <section>
+          <h2>We've chosen: <span>{this.state.winner}</span></h2>
+          <button type="button" onClick={this.back}>Back</button>
+        </section>
         }
       </div>
     )
   }
 }
 
-export default Form;
+export default Form

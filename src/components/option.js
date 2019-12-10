@@ -1,23 +1,25 @@
 import React from 'react';
 
-function Option(props){
+function Option({option, remove, add, update, ...props}){
   return (
-    <li>
+    <li key={option.id}>
       <input
         type="text"
+        value={option.text}
         placeholder="Enter an option"
-        onChange={(e) => {props.update(e, props.id)}}
+        onChange={(e) => {update(e, option.id)}}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
-            props.add()
+            add()
           }
         }}
         required
+        {...props}
       />
       <button
         type="button"
         className="remove"
-        onClick={() => {props.remove(props.id)}}>X</button>
+        onClick={() => {remove(option.id)}}>X</button>
     </li>
   )
 }
