@@ -44,9 +44,15 @@ form{
   flex-direction: column;
 }
 
+.desktop{
+  display: none;
+}
 @media (min-width:801px)  {
   .form-container{
     max-width: 500px;
+  }
+  .desktop{
+    display: inline-block;
   }
 }
 input{

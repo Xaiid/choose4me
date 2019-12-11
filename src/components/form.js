@@ -118,7 +118,7 @@ class ChooseForm extends React.Component {
               onClick={()=> {this.getFoursquareOptions('restaurant')}}>
               {this.state.loading ? 'wait...' : 'Get Near Restaurants'}
             </button>
-            <h1>Choose 4 Me</h1>
+            <h1 className="desktop">Choose 4 Me</h1>
             <button
               type="button"
               className="get"
