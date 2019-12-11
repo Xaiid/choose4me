@@ -136,3 +136,42 @@ h2 span{
 .clear{
   background: #ef281e;
 }
+
+nav{
+  margin-bottom: 25px;
+}
+
+nav ul{
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  height: 50px;
+  background: orange;
+  padding: 0;
+}
+
+nav ul li a{
+  text-decoration: none;
+  color: white;
+  height: 50px;
+  line-height: 50px;
+  margin: 0 10px;
+  padding: 0 5px 5px 5px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  border-bottom: 3px solid orange;
+}
+
+nav ul li a:hover, nav ul li a.active{
+  border-bottom: 3px solid white;
+}
+
+.row{
+  display: flex;
+  justify-content: space-between;
+}
+
+.get{
+   width: 122px;
+}

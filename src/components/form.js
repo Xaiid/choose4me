@@ -1,13 +1,19 @@
 import React from 'react'
 import Option from './option.js'
 
-class Form extends React.Component {
+class ChooseForm extends React.Component {
   constructor(props) {
     super(props)
     this.emptyOptions = [{ id: 0, text: '' }]
     this.state = {
       options: this.emptyOptions,
       winner: null,
+    }
+  }
+
+  static getDerivedStateFromProps(props, state){
+    if(props.options && props.options.length){
+      state.options = props.options
     }
   }
 
@@ -57,6 +63,7 @@ class Form extends React.Component {
   renderOption(i) {
     return (
       <Option
+        key={this.state.options[i].id}
         add={this.add}
         remove={this.remove}
         update={this.update}
@@ -72,7 +79,22 @@ class Form extends React.Component {
           ref="form"
           onSubmit={this.choose}
           className={this.state.winner ? 'hidden' : ''}>
-          <h1>Choose 4 Me</h1>
+
+          <div className="row">
+            <button
+              type="button"
+              className="get"
+              onClick={this.reset}>
+              Get Near Restaurants
+            </button>
+            <h1>Choose 4 Me</h1>
+            <button
+              type="button"
+              className="get"
+              onClick={this.reset}>
+              Get Near Bars
+            </button>
+          </div>
           <ol>
             {
               this.state.options.map((i, index) => {
@@ -100,14 +122,14 @@ class Form extends React.Component {
 
         </form>
         {this.state.winner &&
-        <section>
-          <h2>We've chosen: <span>{this.state.winner}</span></h2>
-          <button type="button" onClick={this.back}>Back</button>
-        </section>
+            <section>
+              <h2>We've chosen: <span>{this.state.winner}</span></h2>
+              <button type="button" onClick={this.back}>Back</button>
+            </section>
         }
       </div>
     )
   }
 }
 
-export default Form
+export default ChooseForm
