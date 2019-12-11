@@ -10,7 +10,13 @@ class api {
 
   getFoursquareOptions = async(query) => {
     let ll = await this.getLocation();
-    return axios.get(`https://api.foursquare.com/v2/venues/search?${secret}&ll=${ll}&limit=10&query=${query}`)
+    if(query === 'restaurant'){
+      return axios.get(`https://api.foursquare.com/v2/venues/search?${secret}&ll=${ll}&radius=250&limit=10&categoryId=4d4b7105d754a06374d81259`)
+    }
+    if(query === 'bar'){
+      return axios.get(`https://api.foursquare.com/v2/venues/search?${secret}&ll=${ll}&radius=250&limit=10&categoryId=4d4b7105d754a06376d81259`)
+    }
+    return axios.get(`https://api.foursquare.com/v2/venues/search?${secret}&ll=${ll}&radius=250&limit=10&query=${query}`)
   }
 
   getLocation = () => {

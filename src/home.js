@@ -1,8 +1,7 @@
 import React from 'react';
-import './index.css';
 import ChooseForm from './components/form.js'
-
 import api from './services/options'
+import './index.css';
 
 
 class Home extends React.Component {

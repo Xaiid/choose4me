@@ -175,3 +175,16 @@ nav ul li a:hover, nav ul li a.active{
 .get{
    width: 122px;
 }
+
+.directions{
+  color: white;
+  margin-bottom: 30px;
+  display: inline-block;
+  text-decoration: none;
+  border-bottom: 2px solid white;
+  padding: 5px;
+}
+
+button:disabled{
+  filter: brightness(0.6);
+}

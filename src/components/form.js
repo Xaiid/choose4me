@@ -1,5 +1,6 @@
 import React from 'react'
 import Option from './option.js'
+import api from '../services/options'
 
 class ChooseForm extends React.Component {
   constructor(props) {
@@ -8,14 +9,16 @@ class ChooseForm extends React.Component {
     this.state = {
       options: this.emptyOptions,
       winner: null,
+      loading: false,
     }
   }
 
-  static getDerivedStateFromProps(props, state){
-    if(props.options && props.options.length){
-      state.options = props.options
-    }
-  }
+  //static getDerivedStateFromProps(props, state){
+    //if(props.options && props.options.length){
+      //state.options = props.options
+    //}
+    //return state
+  //}
 
   remove = id => {
     let position = this.state.options.indexOf(this.state.options.find(obj => id === obj.id))
@@ -43,7 +46,7 @@ class ChooseForm extends React.Component {
   }
 
   back = () => {
-    this.setState({ winner: '' })
+    this.setState({ winner: null })
   }
 
   reset = () => {
@@ -56,8 +59,35 @@ class ChooseForm extends React.Component {
   choose = e => {
     e.preventDefault()
     this.setState({
-      winner: this.state.options[Math.floor(Math.random() * this.state.options.length)].text,
+      winner: this.state.options[Math.floor(Math.random() * this.state.options.length)],
     })
+  }
+
+  getFoursquareOptions = (query) => {
+    (async () => {
+
+      this.setState({
+        loading: true
+      })
+
+      let response = await new api().getFoursquareOptions(query)
+
+      let options = [...response.data.response.venues].map((option, index) => {
+        return {id: index, text: option.name, location: option.location }
+      })
+
+      this.setState({
+        options: options,
+        loading: false
+      })
+    })();
+  }
+
+  getWinnerUrl(){
+    //if(this.state.winner.location.formattedAddress.length > 1) return `https://www.google.com/maps/search/?api=1&query=${this.state.winner.location.formattedAddress.join(" ")}`
+    return `https://www.google.com/maps/search/?api=1&query=${this.state.winner.location.lat},${this.state.winner.location.lng}`
+    //return `https://www.google.com/maps/search/?api=1&query=${this.state.winner.text},${this.state.winner.location.lat},${this.state.winner.location.lng}`
+    //return `https://www.google.com/maps/search/?api=1&query=${this.state.winner.location.lat},${this.state.winner.location.lng}`
   }
 
   renderOption(i) {
@@ -84,15 +114,17 @@ class ChooseForm extends React.Component {
             <button
               type="button"
               className="get"
-              onClick={this.reset}>
-              Get Near Restaurants
+              disabled={this.state.loading ? true : false}
+              onClick={()=> {this.getFoursquareOptions('restaurant')}}>
+              {this.state.loading ? 'wait...' : 'Get Near Restaurants'}
             </button>
             <h1>Choose 4 Me</h1>
             <button
               type="button"
               className="get"
-              onClick={this.reset}>
-              Get Near Bars
+              disabled={this.state.loading ? true : false}
+              onClick={()=>{this.getFoursquareOptions('bar')}}>
+              {this.state.loading ? 'wait...' : 'Get Near Bars'}
             </button>
           </div>
           <ol>
@@ -103,17 +135,21 @@ class ChooseForm extends React.Component {
             }
           </ol>
 
-          <button type="submit">
+          <button
+            disabled={this.state.loading ? true : false}
+            type="submit">
             Choose!!
           </button>
 
           <button
+            disabled={this.state.loading ? true : false}
             type="button"
             onClick={this.add}>
             Add More
           </button>
 
           <button
+            disabled={this.state.loading ? true : false}
             type="button"
             className="clear"
             onClick={this.reset}>
@@ -123,7 +159,10 @@ class ChooseForm extends React.Component {
         </form>
         {this.state.winner &&
             <section>
-              <h2>We've chosen: <span>{this.state.winner}</span></h2>
+              <h2>We've chosen: <span>{this.state.winner.text}</span></h2>
+              {this.state.winner && this.state.winner.location &&
+                  <a className="directions" target="_blank" rel="noopener noreferrer" href={this.getWinnerUrl()}>Get directions -></a>
+              }
               <button type="button" onClick={this.back}>Back</button>
             </section>
         }
